@@ -1,4 +1,4 @@
-# Simple Image App - Technical Implementation Plan
+# Simple Todo App - Technical Implementation Plan
 
 ## Tech Stack
 - React 19 + TypeScript
@@ -11,93 +11,97 @@
 
 ## Page-by-Page Implementation Plan
 
-### 1. Layout & Navigation
+### 1. Authentication Pages
+**Components:**
+- `src/pages/LoginPage.tsx` - User login interface
+- `src/pages/SignupPage.tsx` - User registration interface
+- `src/components/auth/LoginForm.tsx` - Login form component
+- `src/components/auth/SignupForm.tsx` - Registration form component
+
+**Utils & Services:**
+- `src/services/auth.ts` - Authentication API calls
+- `src/hooks/useAuth.ts` - Authentication hooks
+
+**API Endpoints:**
+- `POST /auth/login` - User login
+- `POST /auth/register` - User registration
+- `POST /auth/refresh` - Refresh token
+- `POST /auth/logout` - User logout
+
+### 2. Layout & Navigation
 **Components:**
 - `src/components/layout/AppLayout.tsx` - Main app layout wrapper
 - `src/components/navigation/Navbar.tsx` - Top navigation bar
 - `src/components/navigation/Sidebar.tsx` - Side navigation (mobile)
 
-### 2. Home/Gallery Page (`/`)
+### 3. Todo Dashboard Page (`/`)
 **Components:**
-- `src/pages/HomePage.tsx` - Main gallery view
-- `src/components/gallery/ImageGrid.tsx` - Responsive image grid
-- `src/components/gallery/ImageCard.tsx` - Individual image display card
-- `src/components/gallery/ImageModal.tsx` - Full-size image modal viewer
-- `src/components/gallery/SearchBar.tsx` - Image search functionality
-- `src/components/gallery/FilterPanel.tsx` - Image filtering options
+- `src/pages/TodosPage.tsx` - Main todos dashboard
+- `src/components/todos/TodoList.tsx` - List of todos
+- `src/components/todos/TodoItem.tsx` - Individual todo item
+- `src/components/todos/TodoForm.tsx` - Add/Edit todo form
+- `src/components/todos/TodoFilters.tsx` - Filter todos by status
+- `src/components/todos/TodoStats.tsx` - Todo statistics overview
 
 **Utils & Services:**
-- `src/hooks/useImages.ts` - Custom hook for image data
-- `src/services/imageService.ts` - Image API calls
-- `src/utils/imageUtils.ts` - Image processing utilities
+- `src/hooks/useTodos.ts` - Custom hook for todo data
+- `src/services/todoService.ts` - Todo API calls
+- `src/utils/todoUtils.ts` - Todo utilities
 
 **API Endpoints:**
-- `GET /api/images` - Fetch all images
-- `GET /api/images/search?q={query}` - Search images
-- `GET /api/images/filter?category={category}` - Filter images
+- `GET /api/todos` - Fetch user todos
+- `POST /api/todos` - Create new todo
+- `PUT /api/todos/:id` - Update todo
+- `DELETE /api/todos/:id` - Delete todo
+- `PATCH /api/todos/:id/complete` - Toggle todo completion
 
-### 3. Upload Page (`/upload`)
+### 4. Todo Categories Management
 **Components:**
-- `src/pages/UploadPage.tsx` - Image upload interface
-- `src/components/upload/DropZone.tsx` - Drag & drop upload area
-- `src/components/upload/UploadProgress.tsx` - Upload progress indicator
-- `src/components/upload/ImagePreview.tsx` - Preview uploaded images
-- `src/components/upload/UploadForm.tsx` - Image metadata form
-
-**Utils & Services:**
-- `src/hooks/useImageUpload.ts` - Upload logic hook
-- `src/utils/fileValidation.ts` - File type/size validation
-- `src/utils/imageCompression.ts` - Client-side image optimization
+- `src/pages/CategoriesPage.tsx` - Manage todo categories
+- `src/components/categories/CategoryList.tsx` - List of categories
+- `src/components/categories/CategoryForm.tsx` - Add/Edit category form
 
 **API Endpoints:**
-- `POST /api/images/upload` - Upload single/multiple images
-- `POST /api/images/upload/url` - Upload from URL
-
-### 4. Image Details Page (`/image/:id`)
-**Components:**
-- `src/pages/ImageDetailsPage.tsx` - Full image details view
-- `src/components/image/ImageViewer.tsx` - Large image display
-- `src/components/image/ImageInfo.tsx` - Image metadata display
-- `src/components/image/ImageActions.tsx` - Download, share, delete actions
-- `src/components/image/RelatedImages.tsx` - Similar images section
-
-**API Endpoints:**
-- `GET /api/images/:id` - Get single image details
-- `GET /api/images/:id/related` - Get related images
-- `DELETE /api/images/:id` - Delete image
+- `GET /api/categories` - Fetch user categories
+- `POST /api/categories` - Create new category
+- `PUT /api/categories/:id` - Update category
+- `DELETE /api/categories/:id` - Delete category
 
 ### 5. Common Components
 **Shared UI Components:**
 - `src/components/common/Loading.tsx` - Loading spinner
 - `src/components/common/ErrorBoundary.tsx` - Error handling
-- `src/components/common/Toast.tsx` - Notification system
 - `src/components/common/ConfirmDialog.tsx` - Confirmation dialogs
+- `src/components/common/ProtectedRoute.tsx` - Route protection
 
 ### 6. Types & Models
 **Type Definitions:**
-- `src/types/image.ts` - Image data models
-- `src/types/upload.ts` - Upload-related types
+- `src/types/todo.ts` - Todo data models
+- `src/types/category.ts` - Category data models
 - `src/types/api.ts` - API response types
+- `src/types/user.ts` - User and auth types (already exists)
 
 ### 7. State Management & Utils
 **Hooks & Utilities:**
-- `src/hooks/useImageCache.ts` - Image caching logic
-- `src/hooks/useInfiniteScroll.ts` - Infinite scrolling
+- `src/hooks/useAuth.ts` - Authentication logic
+- `src/hooks/useTodos.ts` - Todo management
 - `src/utils/constants.ts` - App constants
 - `src/services/storage.ts` - Local storage utilities
 
 ### 8. Routing Setup
 **Router Configuration:**
 - Update `src/App.tsx` with React Router setup
-- Define routes for all pages
+- Define routes for all pages (login, todos, categories)
+- Add protected routes
 - Add 404 page handling
 
 ## Implementation Order
-1. Setup routing and layout structure
-2. Create basic image gallery with mock data
-3. Implement image upload functionality
-4. Add image details and modal views
-5. Integrate real API endpoints
-6. Add search and filtering
+1. ✅ Update frontend plan for todo app
+2. 🔄 Implement login page and authentication
+3. Create todo types and API services
+4. Create basic todo dashboard with CRUD operations
+5. Implement todo categories management
+6. Add todo filters and search functionality
 7. Polish UI/UX and add loading states
 8. Add error handling and edge cases
+9. Implement protected routes and auth guards
